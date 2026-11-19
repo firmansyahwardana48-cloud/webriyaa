@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="StudyFlow - dashboard produktivitas belajar." />
+  <title>StudyFlow | Student Productivity</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#overview" aria-label="StudyFlow beranda">
+        <span class="brand-mark">S</span>
+        <span>study<span class="brand-accent">flow</span></span>
+      </a>
+
+      <div class="nav-label">MENU UTAMA</div>
+      <nav class="main-nav" aria-label="Navigasi utama">
+        <a class="nav-link active" href="#overview"><span class="nav-icon">▦</span> Overview</a>
+        <a class="nav-link" href="#tasks"><span class="nav-icon">✓</span> My Tasks</a>
+        <a class="nav-link" href="#schedule"><span class="nav-icon">▤</span> Study Schedule</a>
+        <a class="nav-link" href="#focus"><span class="nav-icon">◷</span> Focus Timer</a>
+        <a class="nav-link" href="#notes"><span class="nav-icon">▧</span> My Notes</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="tip-card">
+          <div class="tip-icon">✦</div>
+          <p class="tip-title">Small steps matter</p>
+          <p class="tip-copy">Belajar sedikit demi sedikit tetap membawa kamu lebih dekat ke tujuan.</p>
+        </div>
+        <div class="profile-row">
+          <div class="avatar">S</div>
+          <div class="profile-text"><strong>Student</strong><span>Keep growing ✨</span></div>
+          <span class="profile-more">•••</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content" id="overview">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Buka menu">☰</button>
+        <div class="breadcrumb">Workspace <span>/</span> <strong>Overview</strong></div>
+        <div class="topbar-right">
+          <span class="today-label" id="todayLabel">Hari ini</span>
+          <div class="top-avatar">S</div>
+        </div>
+      </header>
+
+      <section class="welcome-section">
+        <div>
+          <p class="eyebrow">YOUR PERSONAL STUDY SPACE</p>
+          <h1>Good day, Student! <span class="wave">✦</span></h1>
+          <p class="subheading">Atur waktumu, selesaikan tugasmu, dan capai target belajar hari ini.</p>
+        </div>
+        <a class="primary-button welcome-button" href="#tasks">+ Tambah tugas</a>
+      </section>
+
+      <section class="stats-grid" aria-label="Ringkasan belajar">
+        <article class="stat-card">
+          <div class="stat-top"><span>Total Tasks</span><span class="stat-icon blue-icon">✓</span></div>
+          <div class="stat-value" id="totalTasks">0</div>
+          <div class="stat-foot">Semua tugas yang tercatat</div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>Completed</span><span class="stat-icon green-icon">↗</span></div>
+          <div class="stat-value" id="completedTasks">0</div>
+          <div class="stat-foot">Tugas yang sudah selesai</div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>Focus Sessions</span><span class="stat-icon purple-icon">◷</span></div>
+          <div class="stat-value" id="focusSessions">0</div>
+          <div class="stat-foot">Sesi fokus selesai</div>
+        </article>
+        <article class="stat-card progress-stat">
+          <div class="stat-top"><span>Daily Progress</span><span class="stat-icon orange-icon">✦</span></div>
+          <div class="stat-value"><span id="progressPercent">0</span><small>%</small></div>
+          <div class="mini-progress"><span id="progressBar"></span></div>
+          <div class="stat-foot">Berdasarkan tugas selesai</div>
+        </article>
+      </section>
+
+      <div class="dashboard-grid">
+        <section class="panel tasks-panel" id="tasks">
+          <div class="panel-heading">
+            <div><p class="eyebrow">STAY ON TRACK</p><h2>My Tasks</h2></div>
+            <span class="pill" id="taskCountPill">0 tasks</span>
+          </div>
+          <form id="taskForm" class="task-form">
+            <label class="sr-only" for="taskInput">Nama tugas baru</label>
+            <input id="taskInput" type="text" maxlength="90" placeholder="Tulis tugas yang ingin kamu selesaikan..." required />
+            <select id="taskPriority" aria-label="Prioritas tugas">
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+              <option value="Low">Low</option>
+            </select>
+            <button class="primary-button add-button" type="submit">Add task</button>
+          </form>
+          <div class="task-filters" role="group" aria-label="Filter tugas">
+            <button class="filter-button active" data-filter="all" type="button">All</button>
+            <button class="filter-button" data-filter="active" type="button">In progress</button>
+            <button class="filter-button" data-filter="done" type="button">Completed</button>
+          </div>
+          <ul class="task-list" id="taskList" aria-live="polite"></ul>
+          <p class="empty-state" id="emptyTasks">Belum ada tugas. Tambahkan tugas pertamamu di atas! ✨</p>
+        </section>
+
+        <section class="panel schedule-panel" id="schedule">
+          <div class="panel-heading">
+            <div><p class="eyebrow">PLAN YOUR DAY</p><h2>Study Schedule</h2></div>
+            <span class="calendar-icon">▦</span>
+          </div>
+          <div class="schedule-date" id="scheduleDate">Jadwal hari ini</div>
+          <div class="timeline">
+            <div class="timeline-item"><span class="timeline-time">08:00</span><span class="timeline-dot"></span><div><strong>Morning review</strong><small>Review materi sebelumnya</small></div></div>
+            <div class="timeline-item"><span class="timeline-time">10:00</span><span class="timeline-dot dot-purple"></span><div><strong>Deep study</strong><small>Belajar materi utama</small></div></div>
+            <div class="timeline-item"><span class="timeline-time">13:00</span><span class="timeline-dot dot-orange"></span><div><strong>Practice time</strong><small>Latihan soal dan evaluasi</small></div></div>
+            <div class="timeline-item"><span class="timeline-time">16:00</span><span class="timeline-dot dot-green"></span><div><strong>Quick recap</strong><small>Rangkum hal yang dipelajari</small></div></div>
+          </div>
+          <p class="schedule-hint">Jadwal contoh — sesuaikan dengan rutinitasmu.</p>
+        </section>
+
+        <section class="panel focus-panel" id="focus">
+          <div class="panel-heading">
+            <div><p class="eyebrow">STAY FOCUSED</p><h2>Focus Timer</h2></div>
+            <span class="pill focus-pill">Pomodoro</span>
+          </div>
+          <div class="timer-wrap">
+            <div class="timer-ring" id="timerRing">
+              <div class="timer-inner"><span class="timer-mode" id="timerMode">FOCUS TIME</span><strong id="timerDisplay">25:00</strong><span class="timer-caption">Take it one step at a time</span></div>
+            </div>
+          </div>
+          <div class="timer-modes">
+            <button class="mode-button selected" data-minutes="25" data-mode="FOCUS TIME" type="button">Focus 25m</button>
+            <button class="mode-button" data-minutes="5" data-mode="SHORT BREAK" type="button">Break 5m</button>
+          </div>
+          <div class="timer-actions"><button class="primary-button" id="timerStart" type="button">Start focus</button><button class="secondary-button" id="timerReset" type="button">Reset</button></div>
+          <p class="timer-note">Sesi fokus yang selesai: <strong id="sessionCount">0</strong></p>
+        </section>
+
+        <section class="panel notes-panel" id="notes">
+          <div class="panel-heading">
+            <div><p class="eyebrow">SAVE YOUR IDEAS</p><h2>Quick Notes</h2></div>
+            <span class="notes-icon">✎</span>
+          </div>
+          <label class="sr-only" for="noteInput">Catatan belajar</label>
+          <textarea id="noteInput" rows="5" maxlength="1200" placeholder="Tulis ide, rangkuman, atau hal penting yang kamu pelajari..."></textarea>
+          <div class="notes-footer"><span id="saveStatus">Catatan tersimpan otomatis di browser.</span><span id="characterCount">0/1200</span></div>
+          <button class="secondary-button clear-note" id="clearNote" type="button">Clear notes</button>
+        </section>
+      </div>
+
+      <footer class="footer">Made for your growth <span>♥</span> <small>StudyFlow · Student Productivity</small></footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
